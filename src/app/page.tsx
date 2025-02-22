@@ -29,27 +29,32 @@ export default function ScannerPage() {
   }, [scannedCode]);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
-      <h1 className="text-2xl font-bold mb-4">Event Check-in</h1>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+      <h1 className="text-2xl font-bold my-4">Event Check-in</h1>
 
       {/* Scanner Component */}
-      <BarcodeScanner onScan={setScannedCode} />
+      
+        <BarcodeScanner onScan={setScannedCode}/>
+   
 
-      {/* Manual Input */}
-      <input
-        type="text"
-        placeholder="Enter barcode manually"
-        className="w-full p-2 border rounded mt-4"
-        value={manualInput}
-        onChange={(e) => setManualInput(e.target.value)}
-      />
-      <button
-        onClick={() => lookupAttendee(manualInput)}
-        className="w-full bg-blue-500 text-white p-2 rounded mt-2"
-      >
-        Lookup
-      </button>
+      <div className="px-4">
+        {/* Manual Input */}
+        <input
+          type="text"
+          placeholder="Scan barcode or enter code manually"
+          className="w-full p-2 border rounded mt-4"
+          value={manualInput}
+          onChange={(e) => setManualInput(e.target.value)}
+        />
+        <button
+          onClick={() => lookupAttendee(manualInput)}
+          className="w-full bg-blue-500 text-white p-2 rounded mt-2"
+        >
+          Lookup
+        </button>
+      </div>
 
+      <div className="pb-96">
       {/* Attendee Info */}
       {attendee ? (
         <div className="mt-4 p-4 bg-green-200 rounded">
@@ -63,6 +68,7 @@ export default function ScannerPage() {
           <h2 className="text-lg font-bold">Attendee Not Found</h2>
         </div>
       )}
+      </div>
     </div>
   );
 }
