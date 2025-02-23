@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from "react";
 import BarcodeScanner from "@/components/ScannerComponent";
+import attendeesData from "@/../data/attendees.json"; // Load data at build time
+
 
 export default function ScannerPage() {
   const [attendees, setAttendees] = useState([]);
@@ -11,7 +13,7 @@ export default function ScannerPage() {
 
   // Load attendee data from JSON (client-side)
   useEffect(() => {
-    fetch("/attendees.json")
+    fetch("/api/attendees")
       .then((res) => res.json())
       .then((data) => setAttendees(data))
       .catch((err) => console.error("Failed to load attendees:", err));
@@ -19,7 +21,7 @@ export default function ScannerPage() {
 
   // Lookup function
   const lookupAttendee = (barcode: string) => {
-    const found = attendees.find((a) => a.barcode === barcode);
+    const found = attendees.find((a) => a.barcode.toString() === barcode);
     setAttendee(found || null);
   };
 
@@ -59,9 +61,9 @@ export default function ScannerPage() {
       {attendee ? (
         <div className="mt-4 p-4 bg-green-200 rounded">
           <h2 className="text-lg font-bold">Attendee Found</h2>
-          <p><strong>Name:</strong> {attendee.name}</p>
-          <p><strong>Table:</strong> {attendee.table}</p>
-          <p><strong>Status:</strong> {attendee.status}</p>
+          <p><strong>Name:</strong> {attendee.Name}</p>
+          <p><strong>Table:</strong> {attendee.Table}</p>
+          <p><strong>Status:</strong> {attendee.Code}</p>
         </div>
       ) : scannedCode && (
         <div className="mt-4 p-4 bg-red-200 rounded">
